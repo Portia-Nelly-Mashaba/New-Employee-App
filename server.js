@@ -249,7 +249,8 @@ app.post('/grant-admin/:id', async (req, res) => {
   const userId = req.params.id;
 
   try {
-    await db.collection('users').doc(userId).update({ role: 'admin' });
+    const userRef = doc(db, 'users', userId);
+    await updateDoc(userRef, { role: 'admin' });
     res.status(200).send({ message: 'Admin access granted.' });
   } catch (error) {
     console.error('Error granting admin access:', error);
@@ -262,7 +263,8 @@ app.post('/revoke-admin/:id', async (req, res) => {
   const userId = req.params.id;
 
   try {
-    await db.collection('users').doc(userId).update({ role: 'user' });
+    const userRef = doc(db, 'users', userId);
+    await updateDoc(userRef, { role: 'user' });
     res.status(200).send({ message: 'Admin access revoked.' });
   } catch (error) {
     console.error('Error revoking admin access:', error);
@@ -271,8 +273,7 @@ app.post('/revoke-admin/:id', async (req, res) => {
 });
 
 
-
-  
+ 
   
 const PORT = process.env.PORT || 8001;
 app.listen(PORT, () => {
