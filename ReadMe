@@ -1,0 +1,172 @@
+# Employee Management Application
+
+This is an Employee Management Application built with React.js for the frontend, Node.js for the backend, and Firebase for data persistence and authentication. It enhances an existing React.js Employee App by integrating a robust backend and adding a security layer with super-admin and general-admin roles. The application allows users to manage employee data with CRUD operations, secured access, and persistent storage across sessions and devices.
+
+## Objective
+
+The goal of this project is to combine an existing React.js Employee App with a Node.js backend, leveraging Firebase for data storage and user authentication. Additionally, a security layer is added to enhance functionality with admin-specific features, ensuring controlled access to employee data management.
+
+## Features
+
+### Employee Features
+- **Home Page**:
+  - Action buttons to add a new employee.
+  - Action buttons to list all employees.
+- **Add Employee Page**:
+  - Form with the following inputs:
+    - Name and surname.
+    - Age.
+    - ID number.
+    - Photo (file upload).
+    - Role in company.
+  - Action buttons to submit the new employee data.
+- **View Employees Page**:
+  - Displays a list of all existing employees with details:
+    - Name and surname, Age, ID number, Photo, Role in company.
+  - Action buttons to edit or delete each employee.
+- **Edit Employee Page**:
+  - Pre-filled form with the selected employee’s information.
+  - Allows updates to:
+    - Name and surname.
+    - Age.
+    - ID number.
+    - Photo.
+    - Role in company.
+  - Button to save changes.
+- **Employee Search**:
+  - Feature to search for an employee by their ID number.
+- **Delete Employee Confirmation**:
+  - Confirmation popup when attempting to delete an employee.
+  - Button to confirm deletion.
+
+### Admin Features
+- **Super-Admin Login Page**:
+  - Login form using email and password for super-admin access.
+- **Super-Admin Dashboard**:
+  - Full access to view all employees with CRUD privileges (Create, Read, Update, Delete).
+- **Add General-Admin Page**:
+  - Form for super-admin to add general-admins with:
+    - Name and surname, Age, ID number, Photo, Role in company (default: sysadmin).
+- **Remove Admin Rights**:
+  - Page for super-admin to revoke admin rights from general-admins.
+- **General-Admin Restrictions**:
+  - General-admins require super-admin authorization to delete or update employee data.
+- **Admin Profile Page**:
+  - Displays profile details for the logged-in admin:
+    - Name and surname, Age, ID number, Photo, Role in company.
+- **Navigation Bar**:
+  - Links:
+    - Home (Action buttons to add employees and list all employees).
+    - Add Employee (Form to add a new employee).
+    - Employees (Displays the list of employees).
+    - Admin Login (For super-admin access).
+    - Admin Profile (View logged-in admin details, if applicable).
+
+### Technical Features
+- **Server Side**: Running on Node.js, handling API requests and Firebase integration.
+- **Client Side**: Built with React.js for a user-friendly interface.
+- **Persistence**:
+  - Firebase Admin SDK for data persistence across sessions and devices:
+    - **Firestore**: Stores employee and admin data.
+    - **Storage**: Manages file uploads (e.g., employee photos).
+    - **Auth**: Manages user sessions and authentication for admins.
+- **RESTful API Operations** (via Node.js):
+  - `GET /employees`: Fetches all employees.
+  - `POST /employees`: Adds a new employee.
+  - `PUT /employees/:id`: Updates an existing employee.
+  - `DELETE /employees/:id`: Deletes an employee (with admin authorization).
+  - Admin-specific endpoints (e.g., adding/removing general-admins).
+
+## Technology Stack
+- **Frontend**: React.js
+- **Styling**: Bootstrap (for responsive and user-friendly design)
+- **Backend**: Node.js (with Express for API routing)
+- **Database & Storage**: Firebase (Firestore for data, Storage for files)
+- **Authentication**: Firebase Auth
+- **Development Tools**: npm (package management)
+
+## Installation
+
+To run this project locally, follow these steps:
+
+### Prerequisites
+- Node.js and npm installed on your machine.
+- A Firebase project set up with Firestore, Storage, and Authentication enabled.
+- Firebase Admin SDK credentials (download the service account key JSON file).
+
+### Steps
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/your-username/employee-management-app.git
+   ```
+
+2. **Install Dependencies**:
+   - Navigate to the project root directory:
+     ```bash
+     cd employee-management-app
+     ```
+   - Install both client and server dependencies:
+     ```bash
+     npm install
+     cd client && npm install
+     cd ../server && npm install
+     ```
+
+3. **Set Up Firebase**:
+   - Create a Firebase project in the [Firebase Console](https://console.firebase.google.com/).
+   - Enable Firestore, Storage, and Authentication (Email/Password provider).
+   - Download the Firebase Admin SDK service account key (JSON file) and place it in the `server` directory (e.g., `server/serviceAccountKey.json`).
+   - Update the Firebase configuration in `client/src/firebase.js` and `server/index.js` with your Firebase project credentials.
+
+4. **Start the Backend Server**:
+   - From the `server` directory:
+     ```bash
+     npm start
+     ```
+   - The Node.js server will run on `http://localhost:5000` by default.
+
+5. **Start the React Development Server**:
+   - From the `client` directory:
+     ```bash
+     npm start
+     ```
+   - The React app will run on `http://localhost:3000`.
+
+6. **Open the App**:
+   - Visit `http://localhost:3000` in your browser to access the application.
+
+### Project Structure
+```
+employee-management-app/
+├── client/               # React.js frontend
+│   ├── src/
+│   │   ├── components/   # Reusable UI components
+│   │   ├── pages/        # Pages like Home, AddEmployee, etc.
+│   │   ├── firebase.js   # Firebase configuration for client
+│   └── package.json
+├── server/               # Node.js backend
+│   ├── index.js          # Main server file
+│   ├── routes/           # API routes
+│   ├── serviceAccountKey.json  # Firebase Admin SDK credentials
+│   └── package.json
+├── README.md
+└── package.json
+```
+
+## Usage
+1. **Super-Admin Setup**:
+   - Log in as a super-admin using the email/password set up in Firebase Authentication.
+   - Add general-admins via the super-admin dashboard.
+2. **Employee Management**:
+   - Use the "Add Employee" page to create new employee records.
+   - View, edit, or delete employees from the "Employees" page (super-admin has full access; general-admins need authorization for updates/deletes).
+3. **Testing**:
+   - Thoroughly test all features (CRUD operations, admin login, authorization, search by ID) to ensure functionality.
+
+## Testing
+- Test employee CRUD operations from the React frontend.
+- Verify super-admin login and general-admin management features.
+- Ensure data persists in Firestore and files (photos) are stored in Firebase Storage.
+- Check that general-admin actions (delete/update) are blocked without super-admin approval.
+- Use different devices to confirm session persistence via Firebase Auth.
+
